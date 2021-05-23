@@ -40,7 +40,12 @@
                     })
                     .then((signature) => {
                       console.log(`signed: ${JSON.stringify(signature)}`);
-                        let public_key = 'Test_Pub_Key';
+                      console.log(`digest: ${parsed.value}`);
+                      console.log(`arrayify: ${ethers.utils.arrayify(parsed.value)}`);
+                      let public_key = ethers.utils.recoverPublicKey(parsed.value, signature);
+                      let recAddress = ethers.utils.recoverAddress(parsed.value, signature);
+                      console.log(`public key ${public_key}`);
+                      console.log(`original ${window.ethereum.selectedAddress}, recovered ${recAddress}`);
                       fetch(
                         'http://localhost:9352/rest.php/data_accounting/v1/data_input/' +
                           revId +
